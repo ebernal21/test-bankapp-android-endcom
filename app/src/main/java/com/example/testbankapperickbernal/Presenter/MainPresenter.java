@@ -149,5 +149,4 @@ public class MainPresenter
         }
         new LoadServices().execute();
     }
-    }
 }

@@ -1,8 +1,10 @@
-package com.example.testbankapperickbernal;
+package com.example.testbankapperickbernal.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.testbankapperickbernal.R;
 
 public class MainActivity extends AppCompatActivity {
 

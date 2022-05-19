@@ -12,6 +12,8 @@
         android:layout_height="23dp"
         android:layout_marginTop="28dp"
         android:text="Mis Cuentas"
+        android:textColor="@color/blueLetras"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="30dp" />
 
@@ -20,6 +22,8 @@
         android:layout_width="138dp"
         android:layout_height="23dp"
         android:text="Enviar Dinero"
+        android:textStyle="bold"
+        android:textColor="@color/blueLetras"
         app:layout_constraintTop_toTopOf="@+id/txtMisCuentas"
         tools:layout_editor_absoluteX="233dp" />
 
@@ -35,10 +39,12 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="351dp"
-        android:layout_height="24dp"
+        android:layout_width="364dp"
+        android:layout_height="27dp"
         android:layout_marginTop="20dp"
-        android:text="Agregar una tarjeta de crédito o débito."
+        android:textStyle="bold"
+        android:textColor="@color/blueLetras"
+        android:text="+ Agregar una tarjeta de crédito o débito."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
@@ -53,6 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMovements"
         android:layout_width="323dp"
         android:layout_height="180dp"
         app:layout_constraintBottom_toBottomOf="parent"

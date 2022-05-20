@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testbankapperickbernal.Models.AccountModel;
@@ -47,7 +48,7 @@ public class MainPresenter
         this.activity = activity;
     }
 
-    public void GetLastLogin()
+    public void GetLastLogin(TextView textView)
     {
         //Ejecuta Asyntask para traer datos de cuenta
         class LoadServices extends AsyncTask<String, Void, AccountModel>
@@ -114,24 +115,20 @@ public class MainPresenter
                 //parse JSON to class
                 try
                 {
-                    String success = result.getString("status");
-                    if (TextUtils.equals(success,"Ok"))
-                    {
                         String itemsString = result.getString("cuenta");
-                        JSONObject results = new JSONObject(itemsString);
-                            int id = results.getInt("id");
-                            String cuenta = results.getString("cuenta");
-                            String nombre = results.getString("nombre");
-                            String ultimasesion = results.getString("ultimasesion");
+                        JSONArray items = new JSONArray(itemsString);
+                        for (int i = 0; i < items.length(); i++)
+                        {
+                            JSONObject item = items.getJSONObject(i);
+                            int id = item.getInt("id");
+                            String cuenta = item.getString("cuenta");
+                            String nombre = item.getString("nombre");
+                            String ultimasesion = item.getString("ultimaSesion");
                             account.setId(id);
                             account.setCuenta(cuenta);
                             account.setNombre(nombre);
                             account.setUltimasesion(ultimasesion);
-                    }
-                    else
-                    {
-                        Toast.makeText(context, "Error.",Toast.LENGTH_SHORT).show();
-                    }
+                        }
                 }
                 catch (JSONException e)
                 {
@@ -144,7 +141,7 @@ public class MainPresenter
             @Override
             protected void onPostExecute(AccountModel model) {
                 pd.dismiss();
-                activity.getActionBar().setTitle(model.getNombre() + "    Ultimo inicio:" +model.getUltimasesion() );
+                textView.setText(model.getNombre() + "    Ultimo inicio:" +model.getUltimasesion());
             }
         }
         new LoadServices().execute();

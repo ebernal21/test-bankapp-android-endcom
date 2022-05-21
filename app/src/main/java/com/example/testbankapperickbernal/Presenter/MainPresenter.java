@@ -12,7 +12,10 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.testbankapperickbernal.Models.AccountModel;
+import com.example.testbankapperickbernal.Models.CardsModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +32,7 @@ import java.util.ArrayList;
 
 public class MainPresenter
 {
+    ArrayList<CardsModel> list = new ArrayList<CardsModel>();
     private Context context;
     private Activity activity;
     private ProgressDialog pd;
@@ -145,5 +149,108 @@ public class MainPresenter
             }
         }
         new LoadServices().execute();
+    }
+
+    public void GetCards(RecyclerView recyclerView)
+    {
+        class LoadCards extends AsyncTask<String, Void, ArrayList<CardsModel>>
+        {
+            @Override
+            protected void onPreExecute()
+            {
+                super.onPreExecute();
+                pd = new ProgressDialog(context);
+            }
+
+            @Override
+            protected ArrayList<CardsModel> doInBackground(String... args)
+            {
+                Log.d("Connecting to API", "Connecting");
+                URL url;
+                HttpURLConnection connection = null;
+                try
+                {
+                    url = new URL("http://bankapp.endcom.mx/api/bankappTest/tarjetas");
+                    connection = (HttpURLConnection) url.openConnection();
+                    Log.d("Debug", "Connection Established");
+                    data = connection.getInputStream();
+                    StringBuilder rawData = new StringBuilder();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(data));
+                    String dataLine = "";
+                    while ((dataLine = reader.readLine()) != null)
+                    {
+                        rawData.append(dataLine);
+                    }
+                    resultText = rawData.toString();
+                    Log.d("Raw Data Received", resultText);
+                }
+                catch (MalformedURLException e)
+                {
+                    Log.e("URL Exception", e.toString());
+                }
+                catch (IOException e)
+                {
+                    Log.e("IO Exception", e.toString());
+                }
+                catch (Exception e)
+                {
+                    Log.e("Exception", e.toString());
+                }
+                finally
+                {
+                    if (connection != null) connection.disconnect();
+                }
+                //parse JSON
+                try
+                {
+                    result = new JSONObject(resultText);
+                    Log.d("Data in JSON Format", result.toString());
+                }
+                catch (JSONException e)
+                {
+                    Log.e("JSON Exception", e.toString());
+                }
+                catch (Exception e)
+                {
+                    Log.e("Generic Exception", e.toString());
+                }
+                //parse JSON to class
+                try
+                {
+                    list.clear();
+                    String itemsString = result.getString("tarjetas");
+                    JSONArray items = new JSONArray(itemsString);
+                    for (int i = 0; i < items.length(); i++)
+                    {
+                        JSONObject item = items.getJSONObject(i);
+                        int id = item.getInt("id");
+                        String cardNumber = item.getString("tarjeta");
+                        String nombre = item.getString("nombre");
+                        int balance = item.getInt("saldo");
+                        String estado = item.getString("estado");
+                        String tipo = item.getString("tipo");
+                        list.add(new CardsModel(id,cardNumber,nombre,balance,estado,tipo));
+                    }
+                }
+                catch (JSONException e)
+                {
+                    Log.e("JSON Exception", e.toString());
+                }
+                //return array
+                return list;
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<CardsModel> list)
+            {
+                pd.dismiss();
+                if (list.size() > 0)
+                {
+                    MainRecyclerAdapterCards adapter = new MainRecyclerAdapterCards(list,context);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        }
+        new LoadCards().execute();
     }
 }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import com.example.testbankapperickbernal.Presenter.MainPresenter;
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private MainPresenter mainPresenter;
     TextView txtUserLastLogin;
     RecyclerView recyclerViewCards;
+    //HorizontalScrollView horizontalScrollView;
+    RecyclerView recyclerViewMovements;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,5 +31,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewCards.setLayoutManager(new LinearLayoutManager(this));
         mainPresenter.GetLastLogin(txtUserLastLogin);
         mainPresenter.GetCards(recyclerViewCards);
+        //horizontalScrollView = findViewById(R.id.horizontalScrollView);
+        recyclerViewMovements = findViewById(R.id.recyclerViewMovements);
+        recyclerViewMovements.setLayoutManager(new LinearLayoutManager(this));
+        mainPresenter.GetMovements(recyclerViewMovements);
     }
 }

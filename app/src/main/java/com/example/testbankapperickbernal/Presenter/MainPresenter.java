@@ -9,13 +9,18 @@ import android.os.AsyncTask;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testbankapperickbernal.Models.AccountModel;
+import com.example.testbankapperickbernal.Models.BalanceModel;
 import com.example.testbankapperickbernal.Models.CardsModel;
+import com.example.testbankapperickbernal.Models.MovementModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +45,8 @@ public class MainPresenter
     InputStream data = null; //new data received from API
     JSONObject result = null;//JSONobject
     String resultText = "";// result as string
+    BalanceModel balanceModel = new BalanceModel();
+    ArrayList<MovementModel> movementModels = new ArrayList<MovementModel>();
 
     public MainPresenter(Context context)
     {
@@ -252,5 +259,215 @@ public class MainPresenter
             }
         }
         new LoadCards().execute();
+    }
+
+    /*public void GetAccountBalance(HorizontalScrollView horizontalScrollView, LinearLayout linearLayout)
+    {
+        //Ejecuta Asyntask para traer datos de cuenta
+        class LoadBalance extends AsyncTask<String, Void, BalanceModel>
+        {
+            @Override
+            protected void onPreExecute()
+            {
+                super.onPreExecute();
+                pd = new ProgressDialog(context);
+            }
+
+            @Override
+            protected BalanceModel doInBackground(String... args)
+            {
+                Log.d("Connecting to API", "Connecting");
+                URL url;
+                HttpURLConnection connection = null;
+                try
+                {
+                    url = new URL("http://bankapp.endcom.mx/api/bankappTest/cuenta");
+                    connection = (HttpURLConnection) url.openConnection();
+                    Log.d("Debug", "Connection Established");
+                    data = connection.getInputStream();
+                    StringBuilder rawData = new StringBuilder();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(data));
+                    String dataLine = "";
+                    while ((dataLine = reader.readLine()) != null)
+                    {
+                        rawData.append(dataLine);
+                    }
+                    resultText = rawData.toString();
+                    Log.d("Raw Data Received", resultText);
+                }
+                catch (MalformedURLException e)
+                {
+                    Log.e("URL Exception", e.toString());
+                }
+                catch (IOException e)
+                {
+                    Log.e("IO Exception", e.toString());
+                }
+                catch (Exception e)
+                {
+                    Log.e("Exception", e.toString());
+                }
+                finally
+                {
+                    if (connection != null) connection.disconnect();
+                }
+                //parse JSON
+                try
+                {
+                    result = new JSONObject(resultText);
+                    Log.d("Data in JSON Format", result.toString());
+                }
+                catch (JSONException e)
+                {
+                    Log.e("JSON Exception", e.toString());
+                }
+                catch (Exception e)
+                {
+                    Log.e("Generic Exception", e.toString());
+                }
+                //parse JSON to class
+                try
+                {
+                    String itemsString = result.getString("saldos");
+                    JSONArray items = new JSONArray(itemsString);
+                    for (int i = 0; i < items.length(); i++)
+                    {
+                        JSONObject item = items.getJSONObject(i);
+                        int id = item.getInt("id");
+                        String cuenta = item.getString("cuenta");
+                        int ingresos = item.getInt("ingresos");
+                        int saldoGeneral = item.getInt("saldoGeneral");
+                        int gastos = item.getInt("gastos");
+                        balanceModel.setId(id);
+                        balanceModel.setAccount(cuenta);
+                        balanceModel.setGeneralBalance(saldoGeneral);
+                        balanceModel.setRevenue(ingresos);
+                        balanceModel.setExpenses(gastos);
+                    }
+                }
+                catch (JSONException e)
+                {
+                    Log.e("JSON Exception", e.toString());
+                }
+                return balanceModel;
+            }
+
+            @Override
+            protected void onPostExecute(BalanceModel model)
+            {
+                pd.dismiss();
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                horizontalScrollView.setLayoutParams(layoutParams);
+
+                LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+                linearLayout.setLayoutParams(linearParams);
+
+                horizontalScrollView.addView(linearLayout);
+
+            }
+        }
+        new LoadBalance().execute();
+    }*/
+
+    public void GetMovements(RecyclerView recyclerView)
+    {
+        class LoadMovements extends AsyncTask<String, Void, ArrayList<MovementModel>>
+        {
+            @Override
+            protected void onPreExecute()
+            {
+                super.onPreExecute();
+                pd = new ProgressDialog(context);
+            }
+
+            @Override
+            protected ArrayList<MovementModel> doInBackground(String... args)
+            {
+                Log.d("Connecting to API", "Connecting");
+                URL url;
+                HttpURLConnection connection = null;
+                try
+                {
+                    url = new URL("http://bankapp.endcom.mx/api/bankappTest/movimientos");
+                    connection = (HttpURLConnection) url.openConnection();
+                    Log.d("Debug", "Connection Established");
+                    data = connection.getInputStream();
+                    StringBuilder rawData = new StringBuilder();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(data));
+                    String dataLine = "";
+                    while ((dataLine = reader.readLine()) != null)
+                    {
+                        rawData.append(dataLine);
+                    }
+                    resultText = rawData.toString();
+                    Log.d("Raw Data Received", resultText);
+                }
+                catch (MalformedURLException e)
+                {
+                    Log.e("URL Exception", e.toString());
+                }
+                catch (IOException e)
+                {
+                    Log.e("IO Exception", e.toString());
+                }
+                catch (Exception e)
+                {
+                    Log.e("Exception", e.toString());
+                }
+                finally
+                {
+                    if (connection != null) connection.disconnect();
+                }
+                //parse JSON
+                try
+                {
+                    result = new JSONObject(resultText);
+                    Log.d("Data in JSON Format", result.toString());
+                }
+                catch (JSONException e)
+                {
+                    Log.e("JSON Exception", e.toString());
+                }
+                catch (Exception e)
+                {
+                    Log.e("Generic Exception", e.toString());
+                }
+                //parse JSON to class
+                try
+                {
+                    movementModels.clear();
+                    String itemsString = result.getString("movimientos");
+                    JSONArray items = new JSONArray(itemsString);
+                    for (int i = 0; i < items.length(); i++)
+                    {
+                        JSONObject item = items.getJSONObject(i);
+                        int id = item.getInt("id");
+                        String fecha = item.getString("fecha");
+                        String descripcion = item.getString("descripcion");
+                        Double monto = item.getDouble("monto");
+                        String tipo = item.getString("tipo");
+                        movementModels.add(new MovementModel(id,fecha,descripcion,monto,tipo));
+                    }
+                }
+                catch (JSONException e)
+                {
+                    Log.e("JSON Exception", e.toString());
+                }
+                return movementModels;
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<MovementModel> list)
+            {
+                pd.dismiss();
+                if (list.size() > 0)
+                {
+                    MainRecyclerAdapterMovements adapter = new MainRecyclerAdapterMovements(movementModels,context);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        }
+        new LoadMovements().execute();
     }
 }

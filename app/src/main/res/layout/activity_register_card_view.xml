@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.RegisterCardView">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Asociar Tarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="76dp"
+        android:layout_height="72dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_baseline_credit_card_24" />
+
+    <EditText
+        android:id="@+id/etxtTarjeta"
+        android:layout_width="352dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Numero de Tarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/etxtCuenta"
+        android:layout_width="158dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Cuenta"
+        app:layout_constraintStart_toStartOf="@+id/etxtTarjeta"
+        app:layout_constraintTop_toBottomOf="@+id/etxtTarjeta" />
+
+    <EditText
+        android:id="@+id/etxtIssure"
+        android:layout_width="158dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:hint="Issure"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/etxtTarjeta"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/etxtCuenta"
+        app:layout_constraintTop_toTopOf="@+id/etxtCuenta" />
+
+    <EditText
+        android:id="@+id/etxtNombre"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Nombre de Tarjeta"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/etxtIssure"
+        app:layout_constraintStart_toStartOf="@+id/etxtCuenta"
+        app:layout_constraintTop_toBottomOf="@+id/etxtCuenta" />
+
+    <EditText
+        android:id="@+id/etxtEstatus"
+        android:layout_width="154dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Estatus"
+        app:layout_constraintStart_toStartOf="@+id/etxtNombre"
+        app:layout_constraintTop_toBottomOf="@+id/etxtMarca" />
+
+    <EditText
+        android:id="@+id/etxtSaldo"
+        android:layout_width="158dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:hint="Saldo"
+        app:layout_constraintBottom_toBottomOf="@+id/etxtEstatus"
+        app:layout_constraintEnd_toEndOf="@+id/etxtNombre"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/etxtEstatus"
+        app:layout_constraintTop_toTopOf="@+id/etxtEstatus" />
+
+    <EditText
+        android:id="@+id/etxtTipo"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Tipo de cuenta"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/etxtSaldo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etxtEstatus"
+        app:layout_constraintTop_toBottomOf="@+id/etxtEstatus" />
+
+    <EditText
+        android:id="@+id/etxtMarca"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Marca"
+        app:layout_constraintEnd_toEndOf="@+id/etxtNombre"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/etxtNombre"
+        app:layout_constraintTop_toBottomOf="@+id/etxtNombre" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:background="@color/grisButton"
+        android:text="Cancelar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/etxtTipo"
+        app:layout_constraintTop_toBottomOf="@+id/etxtTipo"
+        app:layout_constraintVertical_bias="0.006" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:background="@color/blueLetras"
+        android:text="Agregar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/etxtTipo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btnCancel"
+        app:layout_constraintTop_toBottomOf="@+id/etxtTipo"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

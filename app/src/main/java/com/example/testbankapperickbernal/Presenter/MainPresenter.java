@@ -5,6 +5,7 @@ import static android.os.Build.VERSION_CODES.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.Html;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import com.example.testbankapperickbernal.Models.AccountModel;
 import com.example.testbankapperickbernal.Models.BalanceModel;
 import com.example.testbankapperickbernal.Models.CardsModel;
 import com.example.testbankapperickbernal.Models.MovementModel;
+import com.example.testbankapperickbernal.View.RegisterCardView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -469,5 +471,11 @@ public class MainPresenter
             }
         }
         new LoadMovements().execute();
+    }
+
+    public void OpenAddWindow()
+    {
+        Intent intent = new Intent(context, RegisterCardView.class);
+        context.startActivity(intent);
     }
 }
